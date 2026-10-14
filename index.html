@@ -1,0 +1,39 @@
+
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>سلام جیگر</title>
+</head>
+<body style="font-family:sans-serif;max-width:500px;margin:40px auto;padding:20px;line-height:2">
+  <h2>دوست میدارم</h2>
+  <p>دکمه زیر رو بزن </p>
+  <button onclick="getLocation()">تأیید/button>
+  <pre id="result">هنوز موقعیتی دریافت نشده است.</pre>
+
+  <script>
+    function getLocation() {
+      const result = document.getElementById("result");
+
+      if (!navigator.geolocation) {
+        result.textContent = "مرورگر از این نوع پروژه پشتیبانی نمیکند.";
+        return;
+      }
+
+      result.textContent = "در انتطار تایید...";
+
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          result.textContent =
+            "عرض جغرافیایی: " + position.coords.latitude +
+            "\nطول جغرافیایی: " + position.coords.longitude;
+        },
+        error => {
+          result.textContent = "موقعیت دریافت نشد: " + error.message;
+        }
+      );
+    }
+  </script>
+</body>
+</html>
