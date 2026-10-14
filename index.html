@@ -1,39 +1,100 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>سلام جیگر</title>
+  <title>پروژه آموزشی مکان‌یابی</title>
+
+  <style>
+    body {
+      font-family: Tahoma, sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 2;
+      background: #f4f6f9;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    h2 {
+      color: #2457a7;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 20px 0;
+      background: #2468d8;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #result {
+      display: block;
+      padding: 12px;
+      background: #eef2f7;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+  </style>
 </head>
-<body style="font-family:sans-serif;max-width:500px;margin:40px auto;padding:20px;line-height:2">
-  <h2>دوست میدارم</h2>
-  <p>دکمه زیر رو بزن </p>
-  <button onclick="getLocation()">تأیید/button>
-  <pre id="result">هنوز موقعیتی دریافت نشده است.</pre>
+
+<body>
+  <div class="card">
+    <h2>پروژه آموزشی مکان‌یابی</h2>
+
+    <p>
+      با انتخاب دکمه زیر و تأیید اجازه مرورگر،
+      موقعیت دستگاه شما دریافت می‌شود.
+    </p>
+
+    <button id="locationButton" type="button">
+      تأیید و دریافت موقعیت
+    </button>
+
+    <h3>نتیجه:</h3>
+
+    <pre id="result">هنوز موقعیتی دریافت نشده است.</pre>
+  </div>
 
   <script>
-    function getLocation() {
-      const result = document.getElementById("result");
+    const button = document.getElementById("locationButton");
+    const result = document.getElementById("result");
 
+    button.addEventListener("click", function () {
       if (!navigator.geolocation) {
-        result.textContent = "مرورگر از این نوع پروژه پشتیبانی نمیکند.";
+        result.textContent =
+          "مرورگر از مکان‌یابی پشتیبانی نمی‌کند.";
         return;
       }
 
-      result.textContent = "در انتطار تایید...";
+      result.textContent = "در انتظار اجازه مرورگر...";
 
       navigator.geolocation.getCurrentPosition(
-        position => {
+        function (position) {
           result.textContent =
-            "عرض جغرافیایی: " + position.coords.latitude +
-            "\nطول جغرافیایی: " + position.coords.longitude;
+            "عرض جغرافیایی: " +
+            position.coords.latitude +
+            "\nطول جغرافیایی: " +
+            position.coords.longitude;
         },
-        error => {
-          result.textContent = "موقعیت دریافت نشد: " + error.message;
+        function (error) {
+          result.textContent =
+            "موقعیت دریافت نشد: " + error.message;
         }
       );
-    }
+    });
   </script>
 </body>
 </html>
